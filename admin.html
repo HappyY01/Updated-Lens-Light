@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Entries | Lens & Light Contest 2025</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo"><i class="fa-solid fa-camera"></i> Lens & Light 2025</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="admin.html" class="active">Manage Entries</a></li>
+                    <li><a href="registration.html" class="btn">Register Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-heading">Manage Contest Entries</h2>
+                <div class="crud-container">
+                    <div class="crud-form-card">
+                        <h3 id="form-title">Add New Entry</h3>
+                        <form id="crudForm">
+                            <input type="hidden" id="entry-id">
+                            <div class="form-group">
+                                <label for="crud-name">Name</label>
+                                <input type="text" id="crud-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="crud-dept">Dept</label>
+                                <input type="text" id="crud-dept" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="crud-title">Title</label>
+                                <input type="text" id="crud-title" class="form-control" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn" id="submit-btn">Add Entry</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-btn" style="display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="crud-list-card">
+                        <h3>Participants</h3>
+                        <div class="table-responsive">
+                            <table class="crud-table">
+                                <thead><tr><th>Name</th><th>Dept</th><th>Title</th><th>Actions</th></tr></thead>
+                                <tbody id="table-body"></tbody>
+                            </table>
+                            <p id="no-data-msg" style="text-align: center; margin-top: 20px;">No entries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Lens & Light 2025</h4>
+                    <p>Celebrating creativity at SRMU.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="admin.html">Manage Entries</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>lenslightcontest@gmail.com</li>
+                        <li>Lucknow-Deva Road, Barabanki</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; 2025 Lens & Light Photography Contest.</div>
+        </div>
+    </footer>
+    <script src="crud.js"></script>
+</body>
+</html>

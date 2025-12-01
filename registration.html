@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | Lens & Light Contest 2025</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo"><i class="fa-solid fa-camera"></i> Lens & Light 2025</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="admin.html">Manage Entries</a></li>
+                    <li><a href="registration.html" class="active btn">Register Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="crud-form-card" style="max-width: 800px; margin: 0 auto;">
+                    <h2 class="section-heading">Contest Registration</h2>
+                    <form id="registrationForm">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="reg-name">Full Name *</label>
+                            <input type="text" id="reg-name" class="form-control" required placeholder="Letters only">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">Email Address *</label>
+                            <input type="email" id="reg-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-phone">Phone Number</label>
+                            <input type="tel" id="reg-phone" class="form-control" placeholder="10 Digits">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-department">Department *</label>
+                            <input type="text" id="reg-department" class="form-control" required>
+                        </div>
+
+                        <h3 style="margin-top: 30px;">Submission Details</h3>
+                        <div class="form-group">
+                            <label for="reg-title">Photo Title *</label>
+                            <input type="text" id="reg-title" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-upload">Upload Photo *</label>
+                            <input type="file" id="reg-upload" class="form-control" accept="image/*" required>
+                        </div>
+                        <div class="form-group" style="margin-top: 20px;">
+                            <input type="checkbox" id="agree-rules" required>
+                            <label for="agree-rules" style="display: inline;"> I agree to the contest rules.</label>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Complete Registration</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Lens & Light 2025</h4>
+                    <p>Celebrating creativity at SRMU.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="admin.html">Manage Entries</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>lenslightcontest@gmail.com</li>
+                        <li>Lucknow-Deva Road, Barabanki</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; 2025 Lens & Light Photography Contest.</div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

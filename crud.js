@@ -11,10 +11,13 @@ let elements = {};
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Admin panel initializing...');
     initializeElements();
     initializeEventListeners();
-    loadEntries();
+    const entries = loadEntries();
+    console.log('Loaded entries:', entries);
     renderTable();
+    console.log('Admin panel initialized successfully');
 });
 
 /**
@@ -165,6 +168,8 @@ function handleSubmit(e) {
  */
 function renderTable() {
     const entries = loadEntries();
+    
+    console.log('Rendering table with', entries.length, 'entries');
 
     // Update entry count
     if (elements.entryCount) {
@@ -173,12 +178,33 @@ function renderTable() {
 
     // Show/hide no data message
     if (entries.length === 0) {
-        if (elements.noDataMsg) elements.noDataMsg.style.display = 'block';
-        if (elements.tableBody) elements.tableBody.innerHTML = '';
+        console.log('No entries - showing no-data message');
+        if (elements.noDataMsg) {
+            elements.noDataMsg.style.display = 'block';
+        }
+        if (elements.tableBody) {
+            elements.tableBody.innerHTML = '';
+            // Hide the table when there's no data
+            const table = elements.tableBody.closest('table');
+            if (table) {
+                table.style.display = 'none';
+            }
+        }
         return;
     }
 
-    if (elements.noDataMsg) elements.noDataMsg.style.display = 'none';
+    console.log('Entries found - showing table');
+    if (elements.noDataMsg) {
+        elements.noDataMsg.style.display = 'none';
+    }
+    
+    // Show the table
+    if (elements.tableBody) {
+        const table = elements.tableBody.closest('table');
+        if (table) {
+            table.style.display = 'table';
+        }
+    }
 
     // Render table rows
     if (elements.tableBody) {

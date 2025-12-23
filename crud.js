@@ -1,72 +1,351 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const crudForm = document.getElementById("crudForm");
-    const nameIn = document.getElementById("crud-name");
-    const deptIn = document.getElementById("crud-dept");
-    const titleIn = document.getElementById("crud-title");
-    const idIn = document.getElementById("entry-id");
-    const tableBody = document.getElementById("table-body");
-    const noData = document.getElementById("no-data-msg");
-    const submitBtn = document.getElementById("submit-btn");
-    const cancelBtn = document.getElementById("cancel-btn");
-    const formTitle = document.getElementById("form-title");
+/**
+ * LENS & LIGHT CONTEST 2025 - CRUD OPERATIONS
+ * Admin Panel for Managing Contest Entries
+ */
 
-    let entries = JSON.parse(localStorage.getItem("contestEntries")) || [];
-    render();
+// Local storage key
+const STORAGE_KEY = 'lensLightContestEntries';
 
-    crudForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const id = idIn.value;
-        const entry = {
-            id: id ? Number(id) : Date.now(),
-            name: nameIn.value.trim(),
-            dept: deptIn.value.trim(),
-            title: titleIn.value.trim()
-        };
+// DOM elements
+let elements = {};
 
-        if (id) {
-            const idx = entries.findIndex(x => x.id == id);
-            if (idx !== -1) entries[idx] = entry;
-            alert("Updated!");
-        } else {
-            entries.push(entry);
-            alert("Added!");
-        }
-        save(); reset();
-    });
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeElements();
+    initializeEventListeners();
+    loadEntries();
+    renderTable();
+});
 
-    function render() {
-        tableBody.innerHTML = "";
-        if (entries.length === 0) noData.style.display = "block";
-        else {
-            noData.style.display = "none";
-            entries.forEach(e => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `<td>${e.name}</td><td>${e.dept}</td><td>${e.title}</td>
-                <td><button onclick="edit(${e.id})" class="action-btn edit-btn"><i class="fa-solid fa-pen"></i></button>
-                <button onclick="del(${e.id})" class="action-btn delete-btn"><i class="fa-solid fa-trash"></i></button></td>`;
-                tableBody.appendChild(tr);
+/**
+ * Initialize DOM element references
+ */
+function initializeElements() {
+    elements = {
+        form: document.getElementById('crudForm'),
+        idInput: document.getElementById('entry-id'),
+        nameInput: document.getElementById('crud-name'),
+        deptInput: document.getElementById('crud-dept'),
+        titleInput: document.getElementById('crud-title'),
+        submitBtn: document.getElementById('submit-btn'),
+        cancelBtn: document.getElementById('cancel-btn'),
+        formTitle: document.getElementById('form-title'),
+        tableBody: document.getElementById('table-body'),
+        noDataMsg: document.getElementById('no-data-msg'),
+        entryCount: document.getElementById('entry-count')
+    };
+}
+
+/**
+ * Initialize event listeners
+ */
+function initializeEventListeners() {
+    if (elements.form) {
+        elements.form.addEventListener('submit', handleSubmit);
+    }
+
+    if (elements.cancelBtn) {
+        elements.cancelBtn.addEventListener('click', resetForm);
+    }
+
+    // Add input listeners for error clearing
+    [elements.nameInput, elements.deptInput, elements.titleInput].forEach(input => {
+        if (input) {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorId = this.id.replace('crud-', 'crud') + 'Error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    errorElement.textContent = '';
+                }
             });
         }
+    });
+}
+
+/**
+ * Load entries from localStorage
+ */
+function loadEntries() {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+        console.error('Error loading entries:', error);
+        return [];
+    }
+}
+
+/**
+ * Save entries to localStorage
+ */
+function saveEntries(entries) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+        return true;
+    } catch (error) {
+        console.error('Error saving entries:', error);
+        showToast('Failed to save entries', 'error');
+        return false;
+    }
+}
+
+/**
+ * Handle form submission (Add/Update)
+ */
+function handleSubmit(e) {
+    e.preventDefault();
+
+    // Validate inputs
+    const name = elements.nameInput.value.trim();
+    const dept = elements.deptInput.value.trim();
+    const title = elements.titleInput.value.trim();
+    const id = elements.idInput.value;
+
+    let isValid = true;
+
+    if (!name || name.length < 2) {
+        setError(elements.nameInput, 'crudNameError', 'Name is required (min 2 characters)');
+        isValid = false;
     }
 
-    window.del = (id) => { if(confirm("Delete?")) { entries = entries.filter(e => e.id !== id); save(); } };
-    
-    window.edit = (id) => {
-        const e = entries.find(x => x.id === id);
-        if(e) {
-            nameIn.value = e.name; deptIn.value = e.dept; titleIn.value = e.title; idIn.value = e.id;
-            submitBtn.textContent = "Update"; submitBtn.style.backgroundColor = "#f0ad4e";
-            formTitle.innerHTML = "Edit Entry"; cancelBtn.style.display = "inline-block";
+    if (!dept || dept.length < 2) {
+        setError(elements.deptInput, 'crudDeptError', 'Department is required');
+        isValid = false;
+    }
+
+    if (!title || title.length < 2) {
+        setError(elements.titleInput, 'crudTitleError', 'Photo title is required');
+        isValid = false;
+    }
+
+    if (!isValid) {
+        showToast('Please fill all required fields', 'error');
+        return;
+    }
+
+    // Get current entries
+    const entries = loadEntries();
+
+    if (id) {
+        // Update existing entry
+        const index = entries.findIndex(entry => entry.id === parseInt(id));
+        if (index !== -1) {
+            entries[index] = {
+                id: parseInt(id),
+                name,
+                dept,
+                title,
+                updatedAt: new Date().toISOString()
+            };
+            showToast('Entry updated successfully', 'success');
         }
-    };
-
-    cancelBtn.onclick = reset;
-
-    function reset() {
-        crudForm.reset(); idIn.value = "";
-        submitBtn.textContent = "Add Entry"; submitBtn.style.backgroundColor = "";
-        formTitle.innerHTML = "Add New Entry"; cancelBtn.style.display = "none";
+    } else {
+        // Add new entry
+        const newEntry = {
+            id: Date.now(),
+            name,
+            dept,
+            title,
+            createdAt: new Date().toISOString()
+        };
+        entries.push(newEntry);
+        showToast('Entry added successfully', 'success');
     }
 
-    function save() { localStorage.setItem("contestEntries", JSON.stringify(entries)); render(); }
-});
+    // Save and render
+    if (saveEntries(entries)) {
+        renderTable();
+        resetForm();
+    }
+}
+
+/**
+ * Render entries table
+ */
+function renderTable() {
+    const entries = loadEntries();
+
+    // Update entry count
+    if (elements.entryCount) {
+        elements.entryCount.textContent = entries.length;
+    }
+
+    // Show/hide no data message
+    if (entries.length === 0) {
+        if (elements.noDataMsg) elements.noDataMsg.style.display = 'block';
+        if (elements.tableBody) elements.tableBody.innerHTML = '';
+        return;
+    }
+
+    if (elements.noDataMsg) elements.noDataMsg.style.display = 'none';
+
+    // Render table rows
+    if (elements.tableBody) {
+        elements.tableBody.innerHTML = entries.map(entry => `
+            <tr>
+                <td>${escapeHtml(entry.name)}</td>
+                <td>${escapeHtml(entry.dept)}</td>
+                <td>${escapeHtml(entry.title)}</td>
+                <td class="actions-column">
+                    <button 
+                        onclick="editEntry(${entry.id})" 
+                        class="action-btn edit-btn"
+                        title="Edit entry"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                    <button 
+                        onclick="deleteEntry(${entry.id})" 
+                        class="action-btn delete-btn"
+                        title="Delete entry"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+}
+
+/**
+ * Edit entry
+ */
+window.editEntry = function(id) {
+    const entries = loadEntries();
+    const entry = entries.find(e => e.id === id);
+
+    if (!entry) {
+        showToast('Entry not found', 'error');
+        return;
+    }
+
+    // Populate form
+    elements.idInput.value = entry.id;
+    elements.nameInput.value = entry.name;
+    elements.deptInput.value = entry.dept;
+    elements.titleInput.value = entry.title;
+
+    // Update UI
+    elements.formTitle.textContent = 'Edit Entry';
+    elements.submitBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Update Entry</span>
+    `;
+    elements.cancelBtn.style.display = 'inline-flex';
+
+    // Scroll to form
+    elements.form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+/**
+ * Delete entry
+ */
+window.deleteEntry = function(id) {
+    if (!confirm('Are you sure you want to delete this entry? This action cannot be undone.')) {
+        return;
+    }
+
+    const entries = loadEntries();
+    const filteredEntries = entries.filter(entry => entry.id !== id);
+
+    if (saveEntries(filteredEntries)) {
+        showToast('Entry deleted successfully', 'success');
+        renderTable();
+    }
+};
+
+/**
+ * Reset form to initial state
+ */
+function resetForm() {
+    if (elements.form) {
+        elements.form.reset();
+    }
+
+    elements.idInput.value = '';
+    elements.formTitle.textContent = 'Add New Entry';
+    elements.submitBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Add Entry</span>
+    `;
+    elements.cancelBtn.style.display = 'none';
+
+    // Clear any errors
+    [elements.nameInput, elements.deptInput, elements.titleInput].forEach(input => {
+        if (input) {
+            input.classList.remove('error');
+        }
+    });
+
+    ['crudNameError', 'crudDeptError', 'crudTitleError'].forEach(id => {
+        const errorElement = document.getElementById(id);
+        if (errorElement) {
+            errorElement.textContent = '';
+        }
+    });
+}
+
+/**
+ * Set error on input
+ */
+function setError(input, errorId, message) {
+    if (input) {
+        input.classList.add('error');
+    }
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Show toast notification
+ */
+function showToast(message, type = 'success') {
+    // Create container if it doesn't exist
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    // Create toast
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icon = type === 'success' 
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+    
+    toast.innerHTML = `${icon}<span>${message}</span>`;
+    container.appendChild(toast);
+
+    // Remove after 4 seconds
+    setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}

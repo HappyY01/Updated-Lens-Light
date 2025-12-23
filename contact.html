@@ -4,80 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Lens & Light Contest 2025</title>
+    <meta name="description" content="Get in touch with the Lens & Light Contest team. Send us your questions and feedback.">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="index.html" class="logo"><i class="fa-solid fa-camera"></i> Lens & Light 2025</a>
-            <nav>
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>Lens & Light 2025</span>
+            </a>
+            <nav class="nav" id="mainNav">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html" class="active">Contact Us</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
                     <li><a href="admin.html">Manage Entries</a></li>
-                    <li><a href="registration.html" class="btn">Register Now</a></li>
+                    <li><a href="registration.html" class="btn btn-primary">Register Now</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
-        <section class="section">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <h2 class="section-heading">Contact Us</h2>
+                <h1 class="fade-in-up">Contact Us</h1>
+                <p class="fade-in-up" style="animation-delay: 0.1s;">Have questions? We're here to help!</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section contact-section">
+            <div class="container">
                 <div class="contact-grid">
-                    <div class="contact-info">
-                        <h3>Get in Touch</h3>
-                        <div class="info-item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <div><strong>Email Us</strong><p>lenslightcontest@gmail.com</p></div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <div><strong>Location</strong><p>Shri Ramswaroop Memorial University<br>Lucknow-Deva Road, Barabanki</p></div>
+                    <!-- Contact Info -->
+                    <div class="contact-info reveal-on-scroll">
+                        <h2>Get in Touch</h2>
+                        <p>Have questions about the contest? Want to learn more about participation requirements? Feel free to reach out to us.</p>
+                        
+                        <div class="info-items">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Email Us</h4>
+                                    <p>avanishhh0111@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Location</h4>
+                                    <p>Shri Ramswaroop Memorial University<br>Lucknow-Deva Road, Barabanki</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Response Time</h4>
+                                    <p>We typically respond within 24-48 hours</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-form">
-                        <h3>Send us a Message</h3>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" class="form-control" required placeholder="Letters only">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" class="form-control" required></textarea>
-                            </div>
-                            <button type="submit" class="btn">Send Message</button>
-                        </form>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form-wrapper reveal-on-scroll" style="animation-delay: 0.2s;">
+                        <div class="form-card">
+                            <h3>Send us a Message</h3>
+                            <form id="contactForm" class="form">
+                                <div class="form-group">
+                                    <label for="name">Full Name <span class="required">*</span></label>
+                                    <input 
+                                        type="text" 
+                                        id="name" 
+                                        name="name"
+                                        class="form-control" 
+                                        required 
+                                        placeholder="Enter your full name"
+                                        autocomplete="name"
+                                    >
+                                    <span class="form-error" id="nameError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email"
+                                        class="form-control" 
+                                        required 
+                                        placeholder="your.email@example.com"
+                                        autocomplete="email"
+                                    >
+                                    <span class="form-error" id="emailError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <input 
+                                        type="text" 
+                                        id="subject" 
+                                        name="subject"
+                                        class="form-control" 
+                                        placeholder="What is this about?"
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Message <span class="required">*</span></label>
+                                    <textarea 
+                                        id="message" 
+                                        name="message"
+                                        class="form-control" 
+                                        required 
+                                        rows="5"
+                                        placeholder="Write your message here..."
+                                    ></textarea>
+                                    <span class="form-error" id="messageError"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-full">
+                                    <span>Send Message</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section" style="background-color: var(--light-green-bg);">
+        <!-- FAQ Section -->
+        <section class="section faq-section">
             <div class="container">
-                <h2 class="section-heading">FAQ</h2>
-                <div class="faq-item">
-                    <div class="faq-question">Who can participate?</div>
-                    <div class="faq-answer"><p>Open to all students from every department.</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">What camera can I use?</div>
-                    <div class="faq-answer"><p>Any camera, including smartphones.</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">How many photos?</div>
-                    <div class="faq-answer"><p>Max 3 photos per participant.</p></div>
+                <h2 class="section-heading reveal-on-scroll">Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item reveal-on-scroll" style="animation-delay: 0.1s;">
+                        <button class="faq-question">
+                            <span>Who can participate in the contest?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>The contest is open to all students from every department at Shri Ramswaroop Memorial University. Whether you're a beginner or an experienced photographer, we welcome your participation!</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal-on-scroll" style="animation-delay: 0.2s;">
+                        <button class="faq-question">
+                            <span>What type of camera can I use?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can use any camera, including smartphones, point-and-shoot cameras, DSLRs, or mirrorless cameras. What matters is your creativity and vision, not the equipment!</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal-on-scroll" style="animation-delay: 0.3s;">
+                        <button class="faq-question">
+                            <span>How many photos can I submit?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Each participant can submit a maximum of 3 photographs. Make sure each photo aligns with the "Nature Through the Lens" theme and falls under one of the three categories: Landscapes, Wildlife, or Macro Details.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal-on-scroll" style="animation-delay: 0.4s;">
+                        <button class="faq-question">
+                            <span>Can I edit my photos?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Basic editing such as color correction, cropping, and minor adjustments are allowed. However, heavy manipulation that alters the reality of the scene is not permitted.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal-on-scroll" style="animation-delay: 0.5s;">
+                        <button class="faq-question">
+                            <span>When will the winners be announced?</span>
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Winners will be announced on December 1st, 2025. The results will be posted on our website and communicated via email to all participants.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -88,28 +242,43 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Lens & Light 2025</h4>
-                    <p>Celebrating creativity at SRMU.</p>
+                    <p>Celebrating creativity and the art of photography at Shri Ramswaroop Memorial University.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                         <li><a href="admin.html">Manage Entries</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Contact</h4>
+                    <h4>Contact Information</h4>
                     <ul>
-                        <li>lenslightcontest@gmail.com</li>
-                        <li>Lucknow-Deva Road, Barabanki</li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            avanishhh0111@gmail.com
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Lucknow-Deva Road, Barabanki
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">&copy; 2025 Lens & Light Photography Contest.</div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lens & Light Photography Contest. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

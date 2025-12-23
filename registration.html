@@ -4,63 +4,225 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration | Lens & Light Contest 2025</title>
+    <meta name="description" content="Register for the Lens & Light Photography Contest 2025. Submit your entry and showcase your photography skills.">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="index.html" class="logo"><i class="fa-solid fa-camera"></i> Lens & Light 2025</a>
-            <nav>
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>Lens & Light 2025</span>
+            </a>
+            <nav class="nav" id="mainNav">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                     <li><a href="admin.html">Manage Entries</a></li>
-                    <li><a href="registration.html" class="active btn">Register Now</a></li>
+                    <li><a href="registration.html" class="active btn btn-primary">Register Now</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
-        <section class="section">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <div class="crud-form-card" style="max-width: 800px; margin: 0 auto;">
-                    <h2 class="section-heading">Contest Registration</h2>
-                    <form id="registrationForm">
-                        <h3>Personal Information</h3>
-                        <div class="form-group">
-                            <label for="reg-name">Full Name *</label>
-                            <input type="text" id="reg-name" class="form-control" required placeholder="Letters only">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-email">Email Address *</label>
-                            <input type="email" id="reg-email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-phone">Phone Number</label>
-                            <input type="tel" id="reg-phone" class="form-control" placeholder="10 Digits">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-department">Department *</label>
-                            <input type="text" id="reg-department" class="form-control" required>
-                        </div>
+                <h1 class="fade-in-up">Contest Registration</h1>
+                <p class="fade-in-up" style="animation-delay: 0.1s;">Fill out the form below to register for the contest</p>
+            </div>
+        </section>
 
-                        <h3 style="margin-top: 30px;">Submission Details</h3>
-                        <div class="form-group">
-                            <label for="reg-title">Photo Title *</label>
-                            <input type="text" id="reg-title" class="form-control" required>
+        <!-- Registration Section -->
+        <section class="section registration-section">
+            <div class="container">
+                <div class="registration-wrapper">
+                    <div class="registration-info reveal-on-scroll">
+                        <h2>Registration Guidelines</h2>
+                        <div class="guideline-item">
+                            <div class="guideline-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="guideline-content">
+                                <h4>Eligibility</h4>
+                                <p>Open to all students from every department at SRMU</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="reg-upload">Upload Photo *</label>
-                            <input type="file" id="reg-upload" class="form-control" accept="image/*" required>
+                        <div class="guideline-item">
+                            <div class="guideline-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="guideline-content">
+                                <h4>Submission Limit</h4>
+                                <p>Maximum 3 photos per participant</p>
+                            </div>
                         </div>
-                        <div class="form-group" style="margin-top: 20px;">
-                            <input type="checkbox" id="agree-rules" required>
-                            <label for="agree-rules" style="display: inline;"> I agree to the contest rules.</label>
+                        <div class="guideline-item">
+                            <div class="guideline-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="guideline-content">
+                                <h4>Theme</h4>
+                                <p>Nature Through the Lens - Landscapes, Wildlife, or Macro Details</p>
+                            </div>
                         </div>
-                        <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Complete Registration</button>
-                    </form>
+                        <div class="guideline-item">
+                            <div class="guideline-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="guideline-content">
+                                <h4>File Format</h4>
+                                <p>JPEG, PNG (Max 10MB per image)</p>
+                            </div>
+                        </div>
+                        <div class="important-note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <p><strong>Important:</strong> After submitting this form, you'll be redirected to your email client where you can attach your photo(s) and send them to us.</p>
+                        </div>
+                    </div>
+
+                    <div class="registration-form-wrapper reveal-on-scroll" style="animation-delay: 0.2s;">
+                        <div class="form-card">
+                            <form id="registrationForm" class="form">
+                                <h3>Personal Information</h3>
+                                
+                                <div class="form-group">
+                                    <label for="reg-name">Full Name <span class="required">*</span></label>
+                                    <input 
+                                        type="text" 
+                                        id="reg-name" 
+                                        name="name"
+                                        class="form-control" 
+                                        required 
+                                        placeholder="Enter your full name"
+                                        autocomplete="name"
+                                    >
+                                    <span class="form-error" id="regNameError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-email">Email Address <span class="required">*</span></label>
+                                    <input 
+                                        type="email" 
+                                        id="reg-email" 
+                                        name="email"
+                                        class="form-control" 
+                                        required 
+                                        placeholder="your.email@example.com"
+                                        autocomplete="email"
+                                    >
+                                    <span class="form-error" id="regEmailError"></span>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reg-phone">Phone Number</label>
+                                        <input 
+                                            type="tel" 
+                                            id="reg-phone" 
+                                            name="phone"
+                                            class="form-control" 
+                                            placeholder="10-digit number"
+                                            autocomplete="tel"
+                                        >
+                                        <span class="form-error" id="regPhoneError"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reg-department">Department <span class="required">*</span></label>
+                                        <input 
+                                            type="text" 
+                                            id="reg-department" 
+                                            name="department"
+                                            class="form-control" 
+                                            required 
+                                            placeholder="e.g., Computer Science"
+                                        >
+                                        <span class="form-error" id="regDeptError"></span>
+                                    </div>
+                                </div>
+
+                                <h3 class="section-divider">Submission Details</h3>
+
+                                <div class="form-group">
+                                    <label for="reg-category">Category <span class="required">*</span></label>
+                                    <select id="reg-category" name="category" class="form-control" required>
+                                        <option value="">Select a category</option>
+                                        <option value="Landscapes">Landscapes</option>
+                                        <option value="Wildlife">Wildlife</option>
+                                        <option value="Macro Details">Macro Details</option>
+                                    </select>
+                                    <span class="form-error" id="regCategoryError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-title">Photo Title <span class="required">*</span></label>
+                                    <input 
+                                        type="text" 
+                                        id="reg-title" 
+                                        name="title"
+                                        class="form-control" 
+                                        required 
+                                        placeholder="Give your photo a descriptive title"
+                                    >
+                                    <span class="form-error" id="regTitleError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reg-description">Photo Description</label>
+                                    <textarea 
+                                        id="reg-description" 
+                                        name="description"
+                                        class="form-control" 
+                                        rows="3"
+                                        placeholder="Brief description of your photo (optional)"
+                                    ></textarea>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="agree-rules" required>
+                                        <span class="checkbox-custom"></span>
+                                        <span>I agree to the contest rules and terms. I confirm that this is my original work and I own the rights to the submitted photograph(s). <span class="required">*</span></span>
+                                    </label>
+                                    <span class="form-error" id="agreeError"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-full btn-large">
+                                    <span>Complete Registration</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -71,28 +233,43 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Lens & Light 2025</h4>
-                    <p>Celebrating creativity at SRMU.</p>
+                    <p>Celebrating creativity and the art of photography at Shri Ramswaroop Memorial University.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                         <li><a href="admin.html">Manage Entries</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Contact</h4>
+                    <h4>Contact Information</h4>
                     <ul>
-                        <li>lenslightcontest@gmail.com</li>
-                        <li>Lucknow-Deva Road, Barabanki</li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            avanishhh0111@gmail.com
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Lucknow-Deva Road, Barabanki
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">&copy; 2025 Lens & Light Photography Contest.</div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lens & Light Photography Contest. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

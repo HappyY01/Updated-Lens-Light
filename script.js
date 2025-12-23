@@ -1,177 +1,409 @@
-document.addEventListener("DOMContentLoaded", function() {
+/**
+ * LENS & LIGHT CONTEST 2025 - MAIN SCRIPT
+ * Professional Photography Contest Website
+ */
 
-    // --- Config ---
-    const contactEmail = "lenslightcontest@gmail.com";
-    const nameRegex = /^[A-Za-z\s]+$/; 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\d{10}$/;
-
-    // --- Helper: Toast Notification ---
-    // Creates a smooth popup instead of alert()
-    window.showToast = function(message, type = 'success') {
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            document.body.appendChild(container);
-        }
-
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        const icon = type === 'success' ? '<i class="fa-solid fa-check-circle"></i>' : '<i class="fa-solid fa-circle-exclamation"></i>';
-        
-        toast.innerHTML = `${icon} <span>${message}</span>`;
-        container.appendChild(toast);
-
-        // Remove after 4 seconds
-        setTimeout(() => {
-            toast.style.animation = 'fadeOut 0.5s ease forwards';
-            toast.addEventListener('animationend', () => toast.remove());
-        }, 4000);
-    };
-
-    // --- Helper: Input Error Handling ---
-    function setInputError(input, hasError) {
-        if (hasError) {
-            input.classList.add("error");
-            input.style.borderColor = "#d9534f";
-        } else {
-            input.classList.remove("error");
-            input.style.borderColor = "#ddd"; // Reset to default
-        }
+// Configuration
+const CONFIG = {
+    contactEmail: 'avanishhh0111@gmail.com',
+    validation: {
+        nameRegex: /^[A-Za-z\s]{2,50}$/,
+        emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+        phoneRegex: /^\d{10}$/
     }
+};
 
-    // --- Logic: Add Live Validation Listeners ---
-    // Removes the red border immediately when user types
-    function attachLiveValidation(inputs) {
-        inputs.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) {
-                el.addEventListener('input', () => setInputError(el, false));
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+/**
+ * Initialize all app functionality
+ */
+function initializeApp() {
+    initMobileNav();
+    initScrollAnimations();
+    initFAQ();
+    initContactForm();
+    initRegistrationForm();
+}
+
+/**
+ * Mobile Navigation Toggle
+ */
+function initMobileNav() {
+    const navToggle = document.getElementById('navToggle');
+    const nav = document.getElementById('mainNav');
+
+    if (!navToggle || !nav) return;
+
+    navToggle.addEventListener('click', function() {
+        nav.classList.toggle('open');
+        navToggle.classList.toggle('open');
+    });
+
+    // Close nav when clicking nav links
+    const navLinks = nav.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('open');
+            navToggle.classList.remove('open');
+        });
+    });
+
+    // Close nav when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+            nav.classList.remove('open');
+            navToggle.classList.remove('open');
+        }
+    });
+}
+
+/**
+ * Scroll Animations with Intersection Observer
+ */
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
             }
         });
-    }
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
-    // --- FAQ Logic ---
-    const faqItems = document.querySelectorAll(".faq-item");
+    elements.forEach(element => observer.observe(element));
+}
+
+/**
+ * FAQ Accordion
+ */
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
     faqItems.forEach(item => {
-        const q = item.querySelector(".faq-question");
-        const a = item.querySelector(".faq-answer");
-        if(q && a) {
-            q.addEventListener("click", () => {
-                // Toggle active class for Chevron rotation
-                const isActive = item.classList.contains('active');
-                
-                // Close all others
-                faqItems.forEach(i => {
-                    i.classList.remove('active');
-                    $(i.querySelector(".faq-answer")).slideUp(); // Requires jQuery? No, let's use Vanilla JS below
-                    i.querySelector(".faq-answer").style.display = "none";
-                });
+        const question = item.querySelector('.faq-question');
+        
+        if (!question) return;
 
-                if(!isActive) {
-                    item.classList.add('active');
-                    a.style.display = "block";
-                }
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+
+            // Close all FAQ items
+            faqItems.forEach(faqItem => {
+                faqItem.classList.remove('active');
             });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+/**
+ * Contact Form Handling
+ */
+function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const inputs = {
+        name: document.getElementById('name'),
+        email: document.getElementById('email'),
+        subject: document.getElementById('subject'),
+        message: document.getElementById('message')
+    };
+
+    // Add real-time validation
+    addRealTimeValidation(inputs.name, 'nameError', validateName);
+    addRealTimeValidation(inputs.email, 'emailError', validateEmail);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate all fields
+        const nameValid = validateName(inputs.name.value, 'nameError');
+        const emailValid = validateEmail(inputs.email.value, 'emailError');
+        const messageValid = validateRequired(inputs.message.value, 'messageError');
+
+        if (!nameValid || !emailValid || !messageValid) {
+            showToast('Please fix the errors in the form', 'error');
+            return;
+        }
+
+        // Prepare email
+        const emailData = {
+            subject: inputs.subject.value || 'Contact Form Submission - Lens & Light 2025',
+            body: `
+Contact Form Submission
+Lens & Light Photography Contest 2025
+
+Name: ${inputs.name.value}
+Email: ${inputs.email.value}
+Subject: ${inputs.subject.value || 'N/A'}
+
+Message:
+${inputs.message.value}
+
+---
+This email was sent via the Lens & Light Contest website contact form.
+            `.trim()
+        };
+
+        sendEmail(emailData);
+        form.reset();
+    });
+}
+
+/**
+ * Registration Form Handling
+ */
+function initRegistrationForm() {
+    const form = document.getElementById('registrationForm');
+    if (!form) return;
+
+    const inputs = {
+        name: document.getElementById('reg-name'),
+        email: document.getElementById('reg-email'),
+        phone: document.getElementById('reg-phone'),
+        department: document.getElementById('reg-department'),
+        category: document.getElementById('reg-category'),
+        title: document.getElementById('reg-title'),
+        description: document.getElementById('reg-description'),
+        agreeRules: document.getElementById('agree-rules')
+    };
+
+    // Add real-time validation
+    addRealTimeValidation(inputs.name, 'regNameError', validateName);
+    addRealTimeValidation(inputs.email, 'regEmailError', validateEmail);
+    addRealTimeValidation(inputs.phone, 'regPhoneError', validatePhone);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate all fields
+        const nameValid = validateName(inputs.name.value, 'regNameError');
+        const emailValid = validateEmail(inputs.email.value, 'regEmailError');
+        const phoneValid = inputs.phone.value ? validatePhone(inputs.phone.value, 'regPhoneError') : true;
+        const deptValid = validateRequired(inputs.department.value, 'regDeptError');
+        const categoryValid = validateRequired(inputs.category.value, 'regCategoryError');
+        const titleValid = validateRequired(inputs.title.value, 'regTitleError');
+
+        if (!inputs.agreeRules.checked) {
+            showToast('Please agree to the contest rules', 'error');
+            document.getElementById('agreeError').textContent = 'You must agree to the rules';
+            return;
+        } else {
+            document.getElementById('agreeError').textContent = '';
+        }
+
+        if (!nameValid || !emailValid || !phoneValid || !deptValid || !categoryValid || !titleValid) {
+            showToast('Please fix the errors in the form', 'error');
+            return;
+        }
+
+        // Prepare email
+        const emailData = {
+            subject: `Contest Registration: ${inputs.title.value} - ${inputs.name.value}`,
+            body: `
+Contest Registration
+Lens & Light Photography Contest 2025
+
+PARTICIPANT INFORMATION:
+-------------------------
+Name: ${inputs.name.value}
+Email: ${inputs.email.value}
+Phone: ${inputs.phone.value || 'Not provided'}
+Department: ${inputs.department.value}
+
+SUBMISSION DETAILS:
+------------------
+Category: ${inputs.category.value}
+Photo Title: ${inputs.title.value}
+Description: ${inputs.description.value || 'Not provided'}
+
+IMPORTANT: Please attach your photograph(s) to this email.
+- Maximum 3 photos per participant
+- Format: JPEG or PNG
+- Maximum file size: 10MB per image
+- Theme: Nature Through the Lens
+
+The participant has agreed to the contest rules and confirmed that the submitted work is original.
+
+---
+Registration submitted via Lens & Light Contest website on ${new Date().toLocaleDateString()}
+            `.trim()
+        };
+
+        showToast('Redirecting to email client...', 'success');
+        
+        setTimeout(() => {
+            sendEmail(emailData);
+            showToast('Please attach your photo(s) and send the email', 'success');
+            form.reset();
+        }, 1500);
+    });
+}
+
+/**
+ * Validation Functions
+ */
+function validateName(value, errorId) {
+    const errorElement = document.getElementById(errorId);
+    const input = document.querySelector(`#${errorId.replace('Error', '')}`);
+    
+    if (!value || value.trim().length < 2) {
+        setError(input, errorElement, 'Name must be at least 2 characters');
+        return false;
+    }
+    
+    if (!CONFIG.validation.nameRegex.test(value.trim())) {
+        setError(input, errorElement, 'Name should contain only letters and spaces');
+        return false;
+    }
+    
+    clearError(input, errorElement);
+    return true;
+}
+
+function validateEmail(value, errorId) {
+    const errorElement = document.getElementById(errorId);
+    const input = document.querySelector(`#${errorId.replace('Error', '')}`);
+    
+    if (!value) {
+        setError(input, errorElement, 'Email is required');
+        return false;
+    }
+    
+    if (!CONFIG.validation.emailRegex.test(value.trim())) {
+        setError(input, errorElement, 'Please enter a valid email address');
+        return false;
+    }
+    
+    clearError(input, errorElement);
+    return true;
+}
+
+function validatePhone(value, errorId) {
+    const errorElement = document.getElementById(errorId);
+    const input = document.querySelector(`#${errorId.replace('Error', '')}`);
+    
+    if (value && !CONFIG.validation.phoneRegex.test(value.trim())) {
+        setError(input, errorElement, 'Phone number must be 10 digits');
+        return false;
+    }
+    
+    clearError(input, errorElement);
+    return true;
+}
+
+function validateRequired(value, errorId) {
+    const errorElement = document.getElementById(errorId);
+    const input = document.querySelector(`#${errorId.replace('Error', '')}`);
+    
+    if (!value || value.trim().length === 0) {
+        setError(input, errorElement, 'This field is required');
+        return false;
+    }
+    
+    clearError(input, errorElement);
+    return true;
+}
+
+function setError(input, errorElement, message) {
+    if (input) input.classList.add('error');
+    if (errorElement) errorElement.textContent = message;
+}
+
+function clearError(input, errorElement) {
+    if (input) input.classList.remove('error');
+    if (errorElement) errorElement.textContent = '';
+}
+
+/**
+ * Real-time Validation
+ */
+function addRealTimeValidation(input, errorId, validationFn) {
+    if (!input) return;
+
+    input.addEventListener('blur', function() {
+        if (this.value) {
+            validationFn(this.value, errorId);
         }
     });
 
-    // --- Registration Validation ---
-    const regForm = document.getElementById("registrationForm");
-    if (regForm) {
-        // Attach live listeners
-        attachLiveValidation(['reg-name', 'reg-email', 'reg-phone']);
+    input.addEventListener('input', function() {
+        if (this.classList.contains('error')) {
+            clearError(this, document.getElementById(errorId));
+        }
+    });
+}
 
-        regForm.addEventListener("submit", function(e) {
-            e.preventDefault();
-            const name = document.getElementById("reg-name");
-            const email = document.getElementById("reg-email");
-            const phone = document.getElementById("reg-phone");
-            const dept = document.getElementById("reg-department");
-            const title = document.getElementById("reg-title");
-            const agree = document.getElementById("agree-rules");
+/**
+ * Send Email via mailto
+ */
+function sendEmail(data) {
+    const subject = encodeURIComponent(data.subject);
+    const body = encodeURIComponent(data.body);
+    const mailtoLink = `mailto:${CONFIG.contactEmail}?subject=${subject}&body=${body}`;
+    
+    window.location.href = mailtoLink;
+}
 
-            let valid = true;
-            let firstError = null;
-
-            if (!nameRegex.test(name.value.trim())) { 
-                valid = false; setInputError(name, true); 
-                if(!firstError) firstError = name; 
-            }
-            if (!emailRegex.test(email.value.trim())) { 
-                valid = false; setInputError(email, true); 
-                if(!firstError) firstError = email;
-            }
-            if (phone.value.trim() !== "" && !phoneRegex.test(phone.value.trim())) { 
-                valid = false; setInputError(phone, true); 
-                if(!firstError) firstError = phone;
-            }
-            if (!agree.checked) { 
-                valid = false; 
-                showToast("Please agree to the contest rules", "error");
-                return; // Stop here if rules aren't checked
-            }
-
-            if (!valid) { 
-                showToast("Please correct the highlighted errors.", "error");
-                if(firstError) firstError.focus();
-                return; 
-            }
-
-            // Success logic
-            const subject = encodeURIComponent(`Registration: ${title.value} - ${name.value}`);
-            const body = encodeURIComponent(`Name: ${name.value}\nEmail: ${email.value}\nPhone: ${phone.value}\nDept: ${dept.value}\nTitle: ${title.value}\n\n(Attach photo)`);
-            
-            showToast("Redirecting to email client...", "success");
-            
-            setTimeout(() => {
-                window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
-                regForm.reset();
-            }, 1500);
-        });
+/**
+ * Toast Notification System
+ */
+function showToast(message, type = 'success') {
+    // Create container if it doesn't exist
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
     }
 
-    // --- Contact Validation ---
-    const contactForm = document.getElementById("contactForm");
-    if (contactForm) {
-        attachLiveValidation(['name', 'email']);
+    // Create toast
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icon = type === 'success' 
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+    
+    toast.innerHTML = `${icon}<span>${message}</span>`;
+    container.appendChild(toast);
 
-        contactForm.addEventListener("submit", function(e) {
-            e.preventDefault();
-            const name = document.getElementById("name");
-            const email = document.getElementById("email");
-            const subject = document.getElementById("subject");
-            const message = document.getElementById("message");
+    // Remove after 4 seconds
+    setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
 
-            let valid = true;
-            let firstError = null;
+/**
+ * Header Scroll Effect
+ */
+let lastScrollTop = 0;
+window.addEventListener('scroll', function() {
+    const header = document.querySelector('.header');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            if (!nameRegex.test(name.value.trim())) { 
-                valid = false; setInputError(name, true); 
-                firstError = name;
-            }
-            if (!emailRegex.test(email.value.trim())) { 
-                valid = false; setInputError(email, true); 
-                if(!firstError) firstError = email;
-            }
-
-            if (!valid) { 
-                showToast("Please fix the errors in the form.", "error");
-                if(firstError) firstError.focus();
-                return; 
-            }
-
-            const mailSubject = encodeURIComponent(`Query: ${subject.value}`);
-            const body = encodeURIComponent(`Name: ${name.value}\nEmail: ${email.value}\nMessage:\n${message.value}`);
-            
-            showToast("Opening email client...", "success");
-            
-            setTimeout(() => {
-                window.location.href = `mailto:${contactEmail}?subject=${mailSubject}&body=${body}`;
-                contactForm.reset();
-            }, 1500);
-        });
+    if (scrollTop > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
     }
+
+    lastScrollTop = scrollTop;
 });

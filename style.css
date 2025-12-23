@@ -450,11 +450,15 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Placeholder: Add hero background image */
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     z-index: 1;
+}
+
+/* Fallback gradient if image doesn't load */
+.hero-background:not([style*="background-image"]) {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
 }
 
 .hero-overlay {

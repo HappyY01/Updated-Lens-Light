@@ -96,6 +96,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    opacity: 1;
+    visibility: visible;
 }
 
 main {
@@ -149,6 +151,8 @@ p {
 
 .section {
     padding: var(--spacing-3xl) 0;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* --- ANIMATIONS --- */
@@ -239,7 +243,8 @@ p {
 }
 
 .fade-in-up {
-    opacity: 0;
+    opacity: 1;
+    transform: translateY(0);
     animation: fadeInUp 0.8s ease-out forwards;
 }
 
@@ -249,9 +254,9 @@ p {
 }
 
 .reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    opacity: 1;
+    transform: translateY(0);
+    /* Animation removed - content now visible immediately */
 }
 
 .reveal-on-scroll.revealed {
@@ -479,6 +484,8 @@ p {
     z-index: 2;
     max-width: 900px;
     padding: var(--spacing-xl);
+    opacity: 1;
+    visibility: visible;
 }
 
 .hero-title {
@@ -489,10 +496,13 @@ p {
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
+    opacity: 1;
+    visibility: visible;
 }
 
 .hero-title-line {
     display: block;
+    opacity: 1;
 }
 
 .hero-title-year {
@@ -500,6 +510,7 @@ p {
     font-size: 0.6em;
     color: var(--color-secondary);
     margin-top: var(--spacing-sm);
+    opacity: 1;
 }
 
 .hero-subtitle {
@@ -509,6 +520,8 @@ p {
     margin-bottom: var(--spacing-xl);
     color: rgba(255, 255, 255, 0.95);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    visibility: visible;
 }
 
 .hero-cta {
@@ -516,6 +529,8 @@ p {
     gap: var(--spacing-md);
     justify-content: center;
     flex-wrap: wrap;
+    opacity: 1;
+    visibility: visible;
 }
 
 .scroll-indicator {
@@ -606,6 +621,8 @@ p {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-xl);
     margin-top: var(--spacing-xl);
+    opacity: 1;
+    visibility: visible;
 }
 
 .feature-card {
@@ -614,6 +631,8 @@ p {
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-light);
     transition: all var(--transition-base);
+    opacity: 1;
+    visibility: visible;
 }
 
 .feature-card:hover {
@@ -661,6 +680,8 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-xl);
+    opacity: 1;
+    visibility: visible;
 }
 
 .date-card {
@@ -673,6 +694,8 @@ p {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    opacity: 1;
+    visibility: visible;
 }
 
 .date-card:hover {
@@ -729,6 +752,18 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-3xl);
     align-items: center;
+    opacity: 1;
+    visibility: visible;
+}
+
+.mission-text {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mission-image {
+    opacity: 1;
+    visibility: visible;
 }
 
 .mission-text h2 {
@@ -819,6 +854,8 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-xl);
+    opacity: 1;
+    visibility: visible;
 }
 
 .theme-card {
@@ -828,6 +865,8 @@ p {
     border-left: 4px solid var(--color-primary);
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-base);
+    opacity: 1;
+    visibility: visible;
 }
 
 .theme-card:hover {
@@ -874,11 +913,15 @@ p {
     gap: var(--spacing-xl);
     max-width: 900px;
     margin: 0 auto;
+    opacity: 1;
+    visibility: visible;
 }
 
 .organizer-card {
     text-align: center;
     transition: transform var(--transition-base);
+    opacity: 1;
+    visibility: visible;
 }
 
 .organizer-card:hover {
@@ -1505,12 +1548,15 @@ select.form-control {
 .cta-content {
     position: relative;
     z-index: 2;
+    opacity: 1;
+    visibility: visible;
 }
 
 .cta-content h2 {
     color: var(--color-surface);
     font-size: clamp(2rem, 4vw, 3rem);
     margin-bottom: var(--spacing-md);
+    opacity: 1;
 }
 
 .cta-content p {
@@ -1518,6 +1564,7 @@ select.form-control {
     font-size: 1.125rem;
     max-width: 700px;
     margin: 0 auto var(--spacing-xl);
+    opacity: 1;
 }
 
 .cta-content .btn-primary {
